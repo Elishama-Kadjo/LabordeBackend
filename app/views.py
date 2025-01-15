@@ -16,16 +16,6 @@ from rest_framework.decorators import action
 from rest_framework import status
 
 
-@require_GET
-def check_single_product_existence(request, real_estate):
-    try:
-        real_estate = RealEstate.objects.get(slug=real_estate)
-        return JsonResponse(
-            {"exists": True, "id": real_estate.id, "name": real_estate.title}
-        )
-    except RealEstate.DoesNotExist:
-        return JsonResponse({"exists": False})
-
 
 class RealEstateFavoriteViewSet(APIView):
     def get(self, request):
@@ -42,6 +32,7 @@ class RealEstateFavoriteViewSet(APIView):
 class RealEstateViewSet(ReadOnlyModelViewSet):
     serializer_class = RealEstateListSerializer
     detail_class_serializer = RealEstateDetailSerializer
+    lookup_field = "slug" # on peux overrider l'acces au GET DETAIL, au lieu d'avoir maintenant id, on a slug
     # permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -53,7 +44,7 @@ class RealEstateViewSet(ReadOnlyModelViewSet):
         return super().get_serializer_class()
 
     @action(detail=True, methods=["post"])
-    def add_liked(self, request, pk=None):
+    def add_liked(self, request, slug=None):
         user = self.request.user
         real_estate = self.get_object()
 
@@ -66,7 +57,7 @@ class RealEstateViewSet(ReadOnlyModelViewSet):
         )
 
     @action(detail=True, methods=["delete"])
-    def remove_liked(self, request, pk=None):
+    def remove_liked(self, request, slug=None):
         user = self.request.user
         real_estate = self.get_object()
 

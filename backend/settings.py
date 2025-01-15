@@ -12,21 +12,30 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
+from rest_framework.settings import api_settings
+
+
+load_dotenv() 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#TODO: Mettre les différentes clées/valeurs dans un .env
+# Je suppose que tu vas invalidé les clées apres avoir vu cela
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yg-40&zdfx+e^)#e3eg_*2=+rogm66o2^tc0z3srnm(e5f4u1-'
+SECRET_KEY = os.environ.get("SECRET_KEY")
+URL_FRONTEND = os.environ.get("URL_FRONTEND") # Lorsque ça seras en production tu n'auras plus besoin de chercher où changer cette valeur
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(' ')
 
 
 # Application definition
@@ -75,6 +84,8 @@ REST_FRAMEWORK = {
 }
 
 
+#TODO: je te suggère d'utilisér "knox" qui vas te donner beaucoup plus de controle sur les jetons
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -114,13 +125,15 @@ CORS_ALLOW_ALL_ORIGINS = True
 EMAIL_BACKEND = "app.backends.email_backend.EmailBackend"
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
+#TODO en production envelopper dans un if
+
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = "kadjobilgai@gmail.com"  # Votre adresse Gmail
-EMAIL_HOST_PASSWORD = "smun hvfj cfvb vywb"  # Mot de passe ou App Password
-DEFAULT_FROM_EMAIL = "kadjobilgai@gmail.com"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")  
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 
 MIDDLEWARE = [

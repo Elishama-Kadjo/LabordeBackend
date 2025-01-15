@@ -5,7 +5,6 @@ from .views import (
     ContactPropertyAPIView,
     RealEstateViewSet,
     RealEstateFavoriteViewSet,
-    check_single_product_existence,
     CheckFavoriteExistenceView,
     RealEstateLikedViewSet,
 )
@@ -19,11 +18,6 @@ router.register(
 
 urlpatterns = [
     path("", include(router.urls)),
-    path(
-        "single/realestate/<slug:real_estate>/",
-        check_single_product_existence,
-        name="check_single_product_existence",
-    ),
     path(
         "single/realestate/<slug:real_estate>/favorite/",
         CheckFavoriteExistenceView.as_view(),

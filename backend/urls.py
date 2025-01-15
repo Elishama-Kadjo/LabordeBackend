@@ -15,24 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.conf import settings  # type: ignore          
-from django.contrib import admin  # type: ignore          
-from django.urls import path, include  # type: ignore          
-from django.conf.urls.static import static  # type: ignore          
-from users.views import (
-    CreateResetPassword,
-    ConfirmeResetPassword
-)
+from django.conf import settings           
+from django.contrib import admin           
+from django.urls import path, include           
+from django.conf.urls.static import static           
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("app.urls")),
+    path('', include("users.urls")),
     
-    path("api/v0/auth/", include("dj_rest_auth.urls")),
-    path("api/v0/auth/registration/", include("dj_rest_auth.registration.urls")),
-    path('api/v0/auth/reset_password/', CreateResetPassword.as_view(), name='create_reset_password'),
-    path('api/v0/auth/confirm_reset_password/', ConfirmeResetPassword.as_view(), name='confirm_reset_password'),
-    # path(r"api/v0/auth/", include("knox.urls"))
+
 ]
 
 if settings.DEBUG:
