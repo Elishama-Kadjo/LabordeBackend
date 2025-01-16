@@ -1,0 +1,73 @@
+# Environnement Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environnement virtuel
+env/
+venv/
+ENV/
+
+
+# Base de données locale
+*.sqlite3
+db.sqlite3
+*.db
+
+# Migrations
+migrations/
+
+# Fichiers générés
+*.log
+*.pot
+*.pyc
+*.pid
+
+# Configuration JetBrains (PyCharm, WebStorm, etc.)
+.idea/
+
+# Cache
+*.swp
+*.swo
+*.DS_Store
+*.egg-info/
+dist/
+build/
+*.egg
+*.cover
+
+# Clés et certificats
+*.pem
+*.crt
+*.key
+
+# Statique et médias (stockés ailleurs en production)
+staticfiles/
+media/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+
+# Fichiers front-end
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Secrets
+secrets.json
+config.json
+
+# Autres fichiers sensibles ou inutiles pour le dépôt
+.vscode/
+coverage/
+.envrc
+*.bak
+thumbs.db

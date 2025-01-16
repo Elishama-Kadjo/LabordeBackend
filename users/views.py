@@ -27,8 +27,9 @@ def send_reset_password_email(email, token):
 
     # Nom du template pour l'e-mail
     template_name = "reset_pwd/reset_password.html"
+    
     context = {
-        "reset_password_url": f"http://localhost:5173/reset_password_confirm/?token={token}",
+        "reset_password_url": f"{settings.URL_FRONTEND}/reset_password_confirm/?token={token}",
         "year": current_year,
     }
 
